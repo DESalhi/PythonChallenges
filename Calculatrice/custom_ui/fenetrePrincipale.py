@@ -1,6 +1,27 @@
 # -*- coding: utf-8 -*-
 
-from PySide2 import QtCore, QtGui, QtWidgets
+try:
+	from PySide6 import QtCore, QtGui, QtWidgets
+except (ModuleNotFoundError, ImportError):
+	try:
+		from PyQt5 import QtCore, QtGui, QtWidgets
+	except (ModuleNotFoundError, ImportError):
+		try:
+			from PyQt6 import QtCore, QtGui, QtWidgets
+		except (ModuleNotFoundError, ImportError):
+			raise ModuleNotFoundError(
+				"No Qt binding found. Please install PySide6:\n"
+				"pip install PySide6"
+			)
+
+def _set_font_weight_bold(font):
+	"""Set font weight to bold, compatible with both Qt5 and Qt6."""
+	try:
+		# Qt5 style (integer weight)
+		font.setWeight(75)
+	except TypeError:
+		# Qt6 style (enum weight)
+		font.setWeight(QtGui.QFont.Weight.Bold)
 
 class Ui_form_calculatrice(object):
     def setupUi(self, form_calculatrice):
@@ -15,7 +36,7 @@ class Ui_form_calculatrice(object):
         self.btn_c.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_c.setFont(font)
         self.btn_c.setFlat(True)
@@ -26,7 +47,7 @@ class Ui_form_calculatrice(object):
         self.btn_7.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_7.setFont(font)
         self.btn_7.setFlat(True)
@@ -37,7 +58,7 @@ class Ui_form_calculatrice(object):
         self.btn_8.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_8.setFont(font)
         self.btn_8.setFlat(True)
@@ -48,7 +69,7 @@ class Ui_form_calculatrice(object):
         self.btn_9.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_9.setFont(font)
         self.btn_9.setFlat(True)
@@ -59,7 +80,7 @@ class Ui_form_calculatrice(object):
         self.btn_mult.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_mult.setFont(font)
         self.btn_mult.setFlat(True)
@@ -70,7 +91,7 @@ class Ui_form_calculatrice(object):
         self.btn_4.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_4.setFont(font)
         self.btn_4.setFlat(True)
@@ -81,7 +102,7 @@ class Ui_form_calculatrice(object):
         self.btn_5.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_5.setFont(font)
         self.btn_5.setFlat(True)
@@ -92,7 +113,7 @@ class Ui_form_calculatrice(object):
         self.btn_6.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_6.setFont(font)
         self.btn_6.setFlat(True)
@@ -103,7 +124,7 @@ class Ui_form_calculatrice(object):
         self.btn_moins.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_moins.setFont(font)
         self.btn_moins.setFlat(True)
@@ -114,7 +135,7 @@ class Ui_form_calculatrice(object):
         self.btn_1.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_1.setFont(font)
         self.btn_1.setFlat(True)
@@ -125,7 +146,7 @@ class Ui_form_calculatrice(object):
         self.btn_2.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_2.setFont(font)
         self.btn_2.setFlat(True)
@@ -136,7 +157,7 @@ class Ui_form_calculatrice(object):
         self.btn_3.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_3.setFont(font)
         self.btn_3.setFlat(True)
@@ -147,7 +168,7 @@ class Ui_form_calculatrice(object):
         self.btn_plus.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_plus.setFont(font)
         self.btn_plus.setFlat(True)
@@ -158,7 +179,7 @@ class Ui_form_calculatrice(object):
         self.btn_0.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_0.setFont(font)
         self.btn_0.setFlat(True)
@@ -169,7 +190,7 @@ class Ui_form_calculatrice(object):
         self.btn_point.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_point.setFont(font)
         self.btn_point.setFlat(True)
@@ -180,7 +201,7 @@ class Ui_form_calculatrice(object):
         self.btn_egal.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_egal.setFont(font)
         self.btn_egal.setFlat(True)
@@ -189,7 +210,7 @@ class Ui_form_calculatrice(object):
         self.le_resultat = QtWidgets.QLineEdit(form_calculatrice)
         font = QtGui.QFont()
         font.setPointSize(20)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.le_resultat.setFont(font)
         self.le_resultat.setFrame(False)
@@ -199,7 +220,7 @@ class Ui_form_calculatrice(object):
         self.le_operation = QtWidgets.QLineEdit(form_calculatrice)
         font = QtGui.QFont()
         font.setPointSize(20)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.le_operation.setFont(font)
         self.le_operation.setFrame(False)
@@ -211,7 +232,7 @@ class Ui_form_calculatrice(object):
         self.btn_div.setMaximumSize(QtCore.QSize(64, 64))
         font = QtGui.QFont()
         font.setPointSize(12)
-        font.setWeight(75)
+        _set_font_weight_bold(font)
         font.setBold(True)
         self.btn_div.setFont(font)
         self.btn_div.setFlat(True)

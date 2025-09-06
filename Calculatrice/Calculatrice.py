@@ -1,4 +1,19 @@
-from PySide2 import QtWidgets, QtGui, QtCore
+try:
+	from PySide6 import QtWidgets, QtGui, QtCore
+	_QT_BINDING = 'PySide6'
+except (ModuleNotFoundError, ImportError):
+	try:
+		from PyQt5 import QtWidgets, QtGui, QtCore
+		_QT_BINDING = 'PyQt5'
+	except (ModuleNotFoundError, ImportError):
+		try:
+			from PyQt6 import QtWidgets, QtGui, QtCore
+			_QT_BINDING = 'PyQt6'
+		except (ModuleNotFoundError, ImportError):
+			raise ModuleNotFoundError(
+				"No Qt binding found. Please install PySide6:\n"
+				"pip install PySide6"
+			)
 from functools import partial
 from custom_ui.fenetrePrincipale import Ui_form_calculatrice
 
@@ -88,4 +103,10 @@ class Calculatrice(Ui_form_calculatrice, QtWidgets.QWidget):
 
 app = QtWidgets.QApplication([])
 fenetre = Calculatrice()
+# PySide6/PyQt6 renamed exec_ to exec; provide compatibility alias
+# so older code calling exec_ continues to work regardless of the binding used.
+if _QT_BINDING in ('PySide6', 'PyQt6'):
+	if not hasattr(app, 'exec_'):
+		app.exec_ = app.exec
+
 app.exec_()
