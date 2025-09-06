@@ -17,6 +17,16 @@ except (ModuleNotFoundError, ImportError):
 from functools import partial
 from custom_ui.fenetrePrincipale import Ui_form_calculatrice
 
+# Fonction de compatibilité pour QShortcut entre Qt5 et Qt6
+def create_shortcut(key_sequence, parent, callback):
+	"""Crée un QShortcut compatible Qt5/Qt6."""
+	try:
+		# Qt6: QShortcut est dans QtGui
+		return QtGui.QShortcut(QtGui.QKeySequence(key_sequence), parent, callback)
+	except AttributeError:
+		# Qt5: QShortcut peut être dans QtWidgets
+		return QtWidgets.QShortcut(QtGui.QKeySequence(key_sequence), parent, callback)
+
 # Formate les nombres avec des espaces (ex : 76120 = 76 120)
 def formatNumberResult(x):
 	if isinstance(x, int):
@@ -58,18 +68,18 @@ class Calculatrice(Ui_form_calculatrice, QtWidgets.QWidget):
 
 	def setupRaccourcisClavier(self):
 		for btn in range(10):
-			QtWidgets.QShortcut(QtGui.QKeySequence(btn), self, partial(self.btnNombrePressed, btn)) 
+			create_shortcut(btn, self, partial(self.btnNombrePressed, btn))
 
-		QtWidgets.QShortcut(QtGui.QKeySequence('+'), self, partial(self.btnOperationPressed, '+'))
-		QtWidgets.QShortcut(QtGui.QKeySequence('-'), self, partial(self.btnOperationPressed, '-'))
-		QtWidgets.QShortcut(QtGui.QKeySequence('*'), self, partial(self.btnOperationPressed, '*'))
-		QtWidgets.QShortcut(QtGui.QKeySequence('/'), self, partial(self.btnOperationPressed, '/'))
-		QtWidgets.QShortcut(QtGui.QKeySequence('.'), self, partial(self.btnOperationPressed, '.'))
+		create_shortcut('+', self, partial(self.btnOperationPressed, '+'))
+		create_shortcut('-', self, partial(self.btnOperationPressed, '-'))
+		create_shortcut('*', self, partial(self.btnOperationPressed, '*'))
+		create_shortcut('/', self, partial(self.btnOperationPressed, '/'))
+		create_shortcut('.', self, partial(self.btnOperationPressed, '.'))
 		
-		QtWidgets.QShortcut(QtGui.QKeySequence('Esc'), self, self.close) 
-		QtWidgets.QShortcut(QtGui.QKeySequence('Return'), self, self.calculOperation) 
-		QtWidgets.QShortcut(QtGui.QKeySequence('Entrer'), self, self.calculOperation) 
-		QtWidgets.QShortcut(QtGui.QKeySequence('Del'), self, self.supprimerResultat) 
+		create_shortcut('Esc', self, self.close)
+		create_shortcut('Return', self, self.calculOperation)
+		create_shortcut('Enter', self, self.calculOperation)
+		create_shortcut('Del', self, self.supprimerResultat) 
 
 	def btnNombrePressed(self, bouton):
 		"""Fonction activée quand l'utilisateur appuie sur un chiffre (0-9)"""
